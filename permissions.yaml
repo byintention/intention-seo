@@ -1,0 +1,8 @@
+actions:
+  admin.intention-seo:
+    label: Intention SEO
+    actions:
+      read:
+        label: Read Access
+      write:
+        label: Write Access

@@ -1,0 +1,75 @@
+name: Intention SEO
+slug: intention-seo
+type: plugin
+version: 1.0.0
+description: Page and site SEO for Grav 2 Admin Next — titles, descriptions, indexing, and Open Graph
+icon: search
+author:
+  name: Intention
+  email: admin@fcswebsites.co.uk
+homepage: https://github.com/byintention
+keywords: grav, plugin, seo, opengraph, metadata, admin2
+license: MIT
+
+compatibility:
+  grav: ['2.0']
+
+dependencies:
+  - { name: grav, version: '>=2.0.0' }
+  - { name: api, version: '>=1.0.0' }
+
+form:
+  validation: loose
+  fields:
+    enabled:
+      type: toggle
+      label: PLUGIN_ADMIN.PLUGIN_STATUS
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    site_index:
+      type: toggle
+      label: PLUGIN_INTENTION_SEO.SITE_INDEX
+      help: PLUGIN_INTENTION_SEO.SITE_INDEX_HELP
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_INTENTION_SEO.SITE_INDEX_ON
+        0: PLUGIN_INTENTION_SEO.SITE_INDEX_OFF
+      validate:
+        type: bool
+
+    og_title:
+      type: seo_length
+      label: PLUGIN_INTENTION_SEO.OG_TITLE
+      help: PLUGIN_INTENTION_SEO.OG_TITLE_HELP
+      classes: iseo-empty-ok
+
+    og_description:
+      type: seo_length
+      label: PLUGIN_INTENTION_SEO.OG_DESCRIPTION
+      help: PLUGIN_INTENTION_SEO.OG_DESCRIPTION_HELP
+      rows: 3
+      classes: iseo-empty-ok
+
+    og_image:
+      type: file
+      label: PLUGIN_INTENTION_SEO.OG_IMAGE
+      help: PLUGIN_INTENTION_SEO.OG_IMAGE_HELP
+      destination: 'user://data/intention-seo'
+      multiple: false
+      filesize: 5
+      accept:
+        - image/png
+        - image/jpeg
+        - image/webp
+      allow_extensions:
+        - png
+        - jpg
+        - jpeg
+        - webp

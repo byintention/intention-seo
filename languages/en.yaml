@@ -1,0 +1,31 @@
+PLUGIN_INTENTION_SEO:
+  SIDEBAR: SEO
+  SETTINGS: SEO settings
+  SITE_INDEX: Site indexing
+  SITE_INDEX_HELP: Noindex asks search engines not to index any page. It overrides the setting on each page.
+  SITE_INDEX_ON: Index
+  SITE_INDEX_OFF: Noindex
+  SITE_NOINDEX_WARNING: This site is set to noindex. Search engines are asked not to index any page.
+  OG_TITLE: Open Graph title
+  OG_TITLE_HELP: Used when a page has no Open Graph title, meta title, or page title.
+  OG_DESCRIPTION: Open Graph description
+  OG_DESCRIPTION_HELP: Used when a page has no Open Graph description and no meta description.
+  OG_IMAGE: Open Graph image
+  OG_IMAGE_HELP: PNG, JPEG, or WebP used when a page has no share image, featured image, or hero image.
+  TAB: SEO
+  NO_URL: This page has no public URL, so indexing settings do not apply.
+  ROBOTS: Indexing
+  ROBOTS_HELP: Noindex asks search engines to leave this page out. The site setting wins when the whole site is noindex.
+  ROBOTS_INDEX: Index
+  ROBOTS_NOINDEX: Noindex
+  META_TITLE: Meta title
+  META_TITLE_HELP: Replaces the document title when set. Empty uses the page title and site name. Aim for about 50–60 characters.
+  META_DESCRIPTION: Meta description
+  META_DESCRIPTION_HELP: Used in search results. Aim for about 150–160 characters. Overrides the site default.
+  WORD_COUNT: Word count
+  PAGE_OG_TITLE: Open Graph title
+  PAGE_OG_TITLE_HELP: Share title for this page. Empty uses the meta title, then the document title.
+  PAGE_OG_DESCRIPTION: Open Graph description
+  PAGE_OG_DESCRIPTION_HELP: Share description for this page. Empty uses the meta description, then the site Open Graph description.
+  PAGE_OG_IMAGE: Open Graph image
+  PAGE_OG_IMAGE_HELP: Share image for this page. Empty uses a featured image, the first page image, or a hero image, then the site image.

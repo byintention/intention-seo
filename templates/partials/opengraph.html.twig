@@ -1,0 +1,33 @@
+{% if intention_seo.og_title|default('') %}
+<meta property="og:title" content="{{ intention_seo.og_title|e('html') }}" />
+{% endif %}
+{% if intention_seo.og_site_name|default('') %}
+<meta property="og:site_name" content="{{ intention_seo.og_site_name|e('html') }}" />
+{% endif %}
+{% if intention_seo.og_description|default('') %}
+<meta property="og:description" content="{{ intention_seo.og_description|e('html') }}" />
+{% endif %}
+{% if intention_seo.og_url|default('') %}
+<meta property="og:url" content="{{ intention_seo.og_url|e('html') }}" />
+{% endif %}
+{% if intention_seo.og_type|default('') %}
+<meta property="og:type" content="{{ intention_seo.og_type|e('html') }}" />
+{% endif %}
+{% if intention_seo.og_image|default('') %}
+<meta property="og:image" content="{{ intention_seo.og_image|e('html') }}" />
+{% endif %}
+{% if intention_seo.og_image|default('') and intention_seo.og_image_alt|default('') %}
+<meta property="og:image:alt" content="{{ intention_seo.og_image_alt|e('html') }}" />
+{% endif %}
+{% if intention_seo.twitter_card|default('') %}
+<meta name="twitter:card" content="{{ intention_seo.twitter_card|e('html') }}" />
+{% endif %}
+{% if intention_seo.og_title|default('') %}
+<meta name="twitter:title" content="{{ intention_seo.og_title|e('html') }}" />
+{% endif %}
+{% if intention_seo.og_description|default('') %}
+<meta name="twitter:description" content="{{ intention_seo.og_description|e('html') }}" />
+{% endif %}
+{% if intention_seo.og_image|default('') %}
+<meta name="twitter:image" content="{{ intention_seo.og_image|e('html') }}" />
+{% endif %}

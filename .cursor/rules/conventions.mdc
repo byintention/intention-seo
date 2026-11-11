@@ -1,0 +1,53 @@
+---
+description: Intention SEO conventions — settings, page tab, head tags
+alwaysApply: true
+---
+
+# Intention SEO conventions
+
+## Purpose
+
+Site and page SEO for Grav 2: indexing, document title, meta description, word count, and Open Graph. Twitter cards copy the resolved Open Graph values. Dublin Core is not used.
+
+Plugin slug: `intention-seo`. It does not require Badger Builder.
+
+## Layout
+
+| Path | Purpose |
+|------|---------|
+| `intention-seo.php` | Events: settings page, SEO tab, widget, head tags, sitemap filter |
+| `classes/SeoResolver.php` | Indexing, titles, descriptions, share image, word count |
+| `classes/Api/IntentionSeoApiController.php` | `/status`, `/page-status`, `/page-summary` |
+| `blueprints.yaml` | Site settings form |
+| `admin-next/fields/seo_length.js` | Live length status. No `rows`: 50–60 good, 30–49 ok. `rows` > 1: 150–160 good, 120–149 ok |
+| `admin-next/fields/seo_word_count.js` | Saved-page word count |
+| `admin-next/fields/seo_banner.js` | Warning when the site is noindex, or the page has no URL |
+| `admin-next/widgets/intention-seo.js` | Sticky noindex banner, and title / description / index marks on `/pages` |
+| `assets/css/intention-seo-admin.css` | Admin styles, class prefix `iseo-` |
+| `templates/partials/opengraph.html.twig` | Open Graph and Twitter tags |
+
+The document title is chosen in `user/themes/intention-base/templates/partials/base.html.twig`. Custom `header.seo.title` replaces the whole `<title>`. Otherwise the theme keeps `Page title | Site title`.
+
+## Stored values
+
+- Site config: `site_index`, `og_title`, `og_description`, `og_image` (file under `user/data/intention-seo/`).
+- Page: `header.seo.title`, `header.seo.robots` (`noindex` or empty), `header.seo.og_title`, `header.seo.og_description`, `header.seo.og_image` (page media filename via `filepicker`).
+- Meta description stays `header.metadata.description`.
+
+## Resolution
+
+- Site noindex wins over the page. A non-routable page does not get a robots tag unless its existing `header.robots` already says noindex (the 404 page).
+- Open Graph title: page OG title, else meta title, else document title, else site OG title.
+- Open Graph description: page OG description, else meta description, else site OG description, else `site.metadata.description`.
+- Open Graph image: page image, else featured image, else first page image, else first hero image, else the site image.
+- `user/media` paths are resolved in `SeoResolver`. Do not call Badger.
+
+## Admin Next
+
+- Sidebar route: `/plugin/intention-seo`. Badge `noindex` while the site is noindex.
+- Settings use blueprint mode and `GET`/`PATCH /config/plugins/intention-seo`.
+- API auth header: `X-API-Token`.
+- Delete confirms via `window.__GRAV_DIALOGS` — never native `confirm()`.
+- Admin CSS uses single-hyphen `iseo-` names. Do not add inline `<style>` in JS unless the user asks.
+
+Length-field flags travel in the whitelisted `classes` property: `iseo-composed` scores an empty meta title as the document title, and `iseo-empty-ok` treats an empty fallback as "Not set".

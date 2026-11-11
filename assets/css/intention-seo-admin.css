@@ -1,0 +1,129 @@
+/* Intention SEO — Admin Next fields and pages-list marks.
+   Loaded by the field and widget scripts. Not used on the public site. */
+
+grav-intention-seo--seo_length,
+grav-intention-seo--seo_word_count,
+grav-intention-seo--seo_banner {
+    display: block;
+}
+
+.iseo-input,
+.iseo-area {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border, #e5e7eb);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    line-height: 1.4;
+    color: var(--foreground, #111);
+    background: color-mix(in srgb, var(--muted, #f3f4f6) 50%, transparent);
+    box-sizing: border-box;
+}
+
+.iseo-area {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.iseo-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.iseo-field-status {
+    display: flex;
+    width: 100%;
+}
+
+.iseo-icon {
+    display: block;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.iseo-count {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+}
+
+.iseo-status.is-green { color: #16a34a; }
+.iseo-status.is-amber { color: #d97706; }
+.iseo-status.is-red { color: #dc2626; }
+.iseo-status.is-muted { color: var(--muted-foreground, #6b7280); }
+
+.iseo-status.is-green .iseo-icon { background: #16a34a; }
+.iseo-status.is-amber .iseo-icon { background: #d97706; }
+.iseo-status.is-red .iseo-icon { background: #dc2626; }
+.iseo-status.is-muted .iseo-icon { background: var(--muted-foreground, #6b7280); }
+
+.iseo-banner {
+    margin: 0 0 1rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid #d97706;
+    border-radius: 8px;
+    background: color-mix(in srgb, #d97706 12%, transparent);
+    color: var(--foreground, #111);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.iseo-words {
+    margin: 0;
+    font-size: 14px;
+    color: var(--foreground, #111);
+}
+
+.iseo-words strong {
+    font-variant-numeric: tabular-nums;
+}
+
+.iseo-note {
+    margin: 0.35rem 0 0;
+    font-size: 12px;
+    color: var(--muted-foreground, #6b7280);
+}
+
+.iseo-col {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+    min-width: 4.5rem;
+}
+
+.iseo-col .iseo-status {
+    margin: 0;
+}
+
+.iseo-col-header {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--muted-foreground, #6b7280);
+}
+
+a[href*="/plugin/intention-seo"] span.rounded-full {
+    background-color: var(--destructive-solid, #ef4444);
+    color: #fafafa;
+}
+
+.iseo-site-banner {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding: 0.65rem 1rem;
+    background: #d97706;
+    color: #111;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+}
