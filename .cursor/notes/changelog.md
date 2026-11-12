@@ -1,4 +1,10 @@
 2026-11-11
+The pages list gives meta title, meta description, and index their own columns.
+
+2026-11-11
+The pages list shows meta title, description, and index marks beside each page.
+
+2026-11-11
 Initialized this plugin as its own git repository on the byintention GitHub remote.
 
 2026-11-11

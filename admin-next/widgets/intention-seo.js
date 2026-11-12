@@ -16,7 +16,7 @@ function ensureStylesheet() {
     const link = document.createElement('link');
     link.id = id;
     link.rel = 'stylesheet';
-    link.href = `${base}/user/plugins/intention-seo/assets/css/intention-seo-admin.css`;
+    link.href = `${base}/user/plugins/intention-seo/assets/css/intention-seo-admin.css?v=columns`;
     document.head.appendChild(link);
 }
 
@@ -100,45 +100,63 @@ function dot(state, message, label) {
     return wrap;
 }
 
-function marks(row) {
+function indexMark(state) {
+    if (state === 'index') {
+        return 'green';
+    }
+    if (state === 'site') {
+        return 'amber';
+    }
+    if (state === 'noindex') {
+        return 'red';
+    }
+    return 'muted';
+}
+
+function column(kind, content) {
     const col = document.createElement('div');
-    col.className = 'iseo-col';
-    col.dataset.iseoCol = '1';
-    col.append(
-        dot(row?.title_state, row?.title_message, 'Meta title'),
-        dot(row?.description_state, row?.description_message, 'Meta description'),
-        dot(row?.index_state === 'index' ? 'green' : (row?.index_state === 'site' ? 'amber' : (row?.index_state === 'noindex' ? 'red' : 'muted')), row?.index_message, 'Indexing'),
-    );
+    col.className = `iseo-col iseo-col-${kind}`;
+    col.appendChild(content);
     return col;
+}
+
+function headerLabel(text, tip) {
+    const span = document.createElement('span');
+    span.className = 'iseo-col-header';
+    span.textContent = text;
+    span.title = tip;
+    return span;
+}
+
+function marks(row, compact) {
+    const wrap = document.createElement('div');
+    wrap.className = compact ? 'iseo-cols is-compact' : 'iseo-cols';
+    wrap.dataset.iseoCol = '1';
+    wrap.append(
+        column('title', dot(row?.title_state, row?.title_message, 'Meta title')),
+        column('desc', dot(row?.description_state, row?.description_message, 'Meta description')),
+        column('index', dot(indexMark(row?.index_state), row?.index_message, 'Index')),
+    );
+    return wrap;
 }
 
 function headerCell() {
-    const col = document.createElement('div');
-    col.className = 'iseo-col';
-    col.dataset.iseoCol = '1';
-    col.dataset.iseoHeader = '1';
-    const span = document.createElement('span');
-    span.className = 'iseo-col-header';
-    span.textContent = 'SEO';
-    col.title = 'Meta title, meta description, indexing';
-    col.appendChild(span);
-    return col;
-}
-
-function isTemplateColumn(el) {
-    return el && el.matches('div.hidden.w-20.text-center.md\\:block, div.w-20.text-center');
+    const wrap = document.createElement('div');
+    wrap.className = 'iseo-cols';
+    wrap.dataset.iseoCol = '1';
+    wrap.dataset.iseoHeader = '1';
+    wrap.append(
+        column('title', headerLabel('Meta title', 'Document title length')),
+        column('desc', headerLabel('Meta desc', 'Meta description length')),
+        column('index', headerLabel('Index', 'Whether this page is indexed')),
+    );
+    return wrap;
 }
 
 function paintHeaders() {
     const dots = document.querySelectorAll('div.w-6.text-center');
     for (const el of dots) {
-        if (el.dataset.iseoHeader) {
-            continue;
-        }
         if ((el.textContent || '').trim() !== '·') {
-            continue;
-        }
-        if (!isTemplateColumn(el.previousElementSibling)) {
             continue;
         }
         if (el.nextElementSibling?.dataset?.iseoHeader) {
@@ -148,49 +166,38 @@ function paintHeaders() {
     }
 }
 
-function pageLinkFrom(node) {
-    return node.parentElement?.querySelector('a[href*="/pages/edit"]') || null;
-}
-
-function paintRowColumns() {
-    const cells = document.querySelectorAll('div.flex.w-6.justify-center');
-    for (const el of cells) {
-        if (el.dataset.iseoCol) {
-            continue;
+function statusCell(rowEl) {
+    for (const child of rowEl.children) {
+        if (child.matches('div.flex.w-6.justify-center')) {
+            return child;
         }
-        const prev = el.previousElementSibling;
-        if (!prev || !prev.classList.contains('w-20')) {
-            continue;
-        }
-        const next = el.nextElementSibling;
-        if (next?.dataset?.iseoCol && !next.dataset.iseoHeader) {
-            continue;
-        }
-        const link = pageLinkFrom(el);
-        const row = lookup(routeFromHref(link?.getAttribute('href')));
-        if (!row) {
-            continue;
-        }
-        el.insertAdjacentElement('afterend', marks(row));
     }
+    return null;
 }
 
-function paintMiller() {
-    const list = document.querySelectorAll('[data-miller-row]');
+function paintPageRows() {
+    const list = document.querySelectorAll('[data-page-route]');
     for (const rowEl of list) {
-        const link = rowEl.querySelector('a[href*="/pages/edit"]');
-        if (!link) {
-            continue;
-        }
-        const cluster = rowEl.querySelector('[class*="gap-1.5"]');
-        if (!cluster || cluster.querySelector('[data-iseo-col]')) {
-            continue;
-        }
-        const row = lookup(routeFromHref(link.getAttribute('href')));
+        const route = rowEl.getAttribute('data-page-route');
+        const existing = rowEl.querySelector(':scope > [data-iseo-col]');
+        const row = lookup(route) || lookup(routeFromHref(rowEl.querySelector('a[href*="/pages/edit"]')?.getAttribute('href')));
         if (!row) {
+            existing?.remove();
             continue;
         }
-        cluster.appendChild(marks(row));
+        const key = normalizeRoute(row.route);
+        if (existing?.dataset.iseoRoute === key) {
+            continue;
+        }
+        existing?.remove();
+        const col = marks(row, !statusCell(rowEl));
+        col.dataset.iseoRoute = key;
+        const status = statusCell(rowEl);
+        if (status) {
+            status.insertAdjacentElement('afterend', col);
+        } else {
+            rowEl.appendChild(col);
+        }
     }
 }
 
@@ -212,8 +219,7 @@ function paint() {
             return;
         }
         paintHeaders();
-        paintRowColumns();
-        paintMiller();
+        paintPageRows();
     } finally {
         painting = false;
     }
@@ -298,14 +304,18 @@ function startObserver() {
     window.__intentionSeoObserver = observer;
 }
 
+function boot() {
+    ensureStylesheet();
+    loadStatus();
+    loadPages();
+    startObserver();
+    schedulePaint();
+}
+
 class IntentionSeoWidget extends HTMLElement {
     connectedCallback() {
         this.style.display = 'none';
-        ensureStylesheet();
-        loadStatus();
-        loadPages();
-        startObserver();
-        schedulePaint();
+        boot();
     }
 }
 
@@ -317,4 +327,4 @@ try {
     // The host may define the tag before this file finishes.
 }
 
-ensureStylesheet();
+boot();
