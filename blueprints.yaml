@@ -58,7 +58,7 @@ form:
       classes: iseo-empty-ok
 
     og_image:
-      type: file
+      type: seo_og_image
       label: PLUGIN_INTENTION_SEO.OG_IMAGE
       help: PLUGIN_INTENTION_SEO.OG_IMAGE_HELP
       destination: 'user://data/intention-seo'

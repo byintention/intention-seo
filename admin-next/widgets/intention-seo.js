@@ -16,7 +16,7 @@ function ensureStylesheet() {
     const link = document.createElement('link');
     link.id = id;
     link.rel = 'stylesheet';
-    link.href = `${base}/user/plugins/intention-seo/assets/css/intention-seo-admin.css?v=columns`;
+    link.href = `${base}/user/plugins/intention-seo/assets/css/intention-seo-admin.css?v=og-image`;
     document.head.appendChild(link);
 }
 

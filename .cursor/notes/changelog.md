@@ -1,3 +1,6 @@
+2026-11-19
+The SEO settings page shows the default Open Graph image and can replace or clear it.
+
 2026-11-11
 The pages list gives meta title, meta description, and index their own columns.
 

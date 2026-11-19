@@ -22,6 +22,7 @@ Plugin slug: `intention-seo`. It does not require Badger Builder.
 | `admin-next/fields/seo_length.js` | Live length status. No `rows`: 50–60 good, 30–49 ok. `rows` > 1: 150–160 good, 120–149 ok |
 | `admin-next/fields/seo_word_count.js` | Saved-page word count |
 | `admin-next/fields/seo_banner.js` | Warning when the site is noindex, or the page has no URL |
+| `admin-next/fields/seo_og_image.js` | Settings preview of the site Open Graph image. Replace and clear keep the Grav file map |
 | `admin-next/widgets/intention-seo.js` | Sticky noindex banner, and title / description / index marks on `/pages` |
 | `assets/css/intention-seo-admin.css` | Admin styles, class prefix `iseo-` |
 | `templates/partials/opengraph.html.twig` | Open Graph and Twitter tags |
